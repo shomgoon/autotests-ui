@@ -26,17 +26,26 @@ with sync_playwright() as playwright:
     # Сохраняем состояние браузера (куки и localStorage) в файл для дальнейшего использования
     context.storage_state(path="browser-state.json")
 
-    # проверка отображения заголовка "Dashboard" на странице Dashboard
-    dashboard_title = page.get_by_test_id("dashboard-toolbar-title-text")
-    expect(dashboard_title).to_be_visible()
-
 with sync_playwright() as playwright:
     browser = playwright.chromium.launch(headless=False)
-    context = browser.new_context(storage_state="browser-state.json")  # Указываем файл с сохраненным состоянием
+    context = browser.new_context(storage_state='browser-state.json')
     page = context.new_page()
 
-    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/dashboard")
+    page.goto("https://nikita-filonov.github.io/qa-automation-engineer-ui-course/#/courses")
 
-    page.wait_for_timeout(5000)
-    # Задержка для наглядности выполнения теста (не рекомендуется использовать в реальных автотестах)
-#page.wait_for_timeout(5000)
+    # проверка заголовка
+    courses_title = page.get_by_test_id("courses-list-toolbar-title-text")
+    expect(courses_title).to_be_visible()
+
+    # проверка иконки
+    courses_button = page.get_by_test_id("courses-list-toolbar-create-course-button")
+    expect(courses_button).to_be_visible()
+
+    # проверка текста 1
+    courses_empty_text = page.get_by_test_id("courses-list-empty-view-title-text")
+    expect(courses_empty_text).to_be_visible()
+
+    # проверка текста 2
+    courses_description_text = page.get_by_test_id("courses-list-empty-view-description-text")
+    expect(courses_description_text).to_be_visible()
+    
