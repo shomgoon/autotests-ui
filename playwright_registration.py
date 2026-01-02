@@ -27,10 +27,9 @@ with sync_playwright() as playwright:
     registration_button = page.get_by_test_id("registration-page-registration-button")
     registration_button.click()
 
-    # # Проверяем, что появилось сообщение об ошибке
-    # wrong_email_or_password_alert = page.get_by_test_id('login-page-wrong-email-or-password-alert')
-    # expect(wrong_email_or_password_alert).to_be_visible()
-    # expect(wrong_email_or_password_alert).to_have_text("Wrong email or password")
+    # проверка отображения заголовка "Dashboard" на странице "Dashboard"
+    dashboard_title = page.get_by_test_id("dashboard-toolbar-title-text")
+    expect(dashboard_title).to_be_visible()
 
     # Задержка для наглядности выполнения теста (не рекомендуется использовать в реальных автотестах)
     page.wait_for_timeout(5000)
